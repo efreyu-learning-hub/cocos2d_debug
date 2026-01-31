@@ -10,12 +10,8 @@ It is designed primarily as an **educational tool**, making it easier for beginn
 
 - cocos2d-x (CMake-based project)
 - C++17 or newer
-- ImGui (included with the module)
-- Debug build (`IMGUI_ENABLED`)
 
 ---
-
-## How to integrate into your cocos2d-x project
 
 ## How to integrate into your cocos2d-x project
 
@@ -59,13 +55,14 @@ This creates a singleton debug layer that:
 - automatically reattaches when scenes change
 - always stays on top of the scene graph
 
-### Build configuration
-#### Debug builds
-- IMGUI_ENABLED is defined
-- Debug UI is available at runtime
-#### Release builds:
-- Debug module is completely disabled
-- No performance or binary size overhead
+#### Make sure you added -DCMAKE_OSX_ARCHITECTURES=x86_64 and -DDEBUG=1 to your cmake command line.
+- -DCMAKE_OSX_ARCHITECTURES=x86_64 required to enable 64bit build even if you are using Apple Silicon.
+- -DDEBUG=1 required to enable debug build that enables debug overlay.
+
+```bash
+cd cocos2dsample
+cmake . -B build -DCMAKE_OSX_ARCHITECTURES=x86_64 -DDEBUG=1
+```
 
 ### Intended audience
 - 👶 Beginners learning cocos2d-x
