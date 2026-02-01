@@ -42,7 +42,7 @@ initDebugModule()
 target_link_libraries(${APP_NAME} cocos2d ${GENERIC_LIB})
 ```
 ### 4. Initialize the debug layer on application startup
-In AppDelegate.cpp add header:
+In AppDelegate.cpp add include:
 ```cpp
 #include "cocos2d_debug/imgui_debug_layer.h"
 ```
