@@ -4,16 +4,12 @@ using namespace cocos2d;
 
 using namespace debugModule;
 
-// default color = red
-Color4F DebugComponent::_debugColor = Color4F::RED;
-
 bool DebugComponent::init() {
     if (!Component::init()) {
         return false;
     }
 
     setName(COMPONENT_NAME);
-    scheduleUpdate();
 
     return true;
 }
@@ -34,7 +30,6 @@ DrawNode* DebugComponent::getOrCreateDrawNode() {
         drawNode = DrawNode::create();
         drawNode->setName(DRAW_NODE_NAME);
 
-        // debug overlay — всегда сверху
         drawNode->setLocalZOrder(INT_MAX);
 
         owner->addChild(drawNode);
@@ -50,7 +45,7 @@ void DebugComponent::redrawBorder(DrawNode* drawNode) {
 
     drawNode->clear();
 
-    const Size size = getOwner()->getContentSize();
+    const cocos2d::Size size = getOwner()->getContentSize();
     if (size.width <= 0 || size.height <= 0) {
         return;
     }
@@ -70,12 +65,14 @@ void DebugComponent::redrawBorder(DrawNode* drawNode) {
 //
 
 void DebugComponent::createDebugComponent(Node* node) {
-    if (!node || isDebugComponent(node)) {
-        return;
-    }
-
-    auto component = DebugComponent::create();
-    node->addComponent(component);
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([node]() {
+        if (!node || isDebugComponent(node)) {
+            return;
+        }
+        auto component = DebugComponent::create();
+        node->addComponent(component);
+        node->scheduleUpdate();
+    });
 }
 
 bool DebugComponent::isDebugComponent(Node* node) {
@@ -87,17 +84,18 @@ bool DebugComponent::isDebugComponent(Node* node) {
 }
 
 void DebugComponent::removeDebugComponent(Node* node) {
-    if (!node) {
-        return;
-    }
+    Director::getInstance()->getScheduler()->performFunctionInCocosThread([node]() {
+        if (!node) {
+            return;
+        }
+        if (auto comp = node->getComponent(COMPONENT_NAME)) {
+            node->removeComponent(comp);
+        }
 
-    if (auto comp = node->getComponent(COMPONENT_NAME)) {
-        node->removeComponent(comp);
-    }
-
-    if (auto drawNode = node->getChildByName(DRAW_NODE_NAME)) {
-        drawNode->removeFromParent();
-    }
+        if (auto drawNode = node->getChildByName(DRAW_NODE_NAME)) {
+            drawNode->removeFromParent();
+        }
+    });
 }
 
 void DebugComponent::setDebugColor(Node* node, const Color4F& color) {

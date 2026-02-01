@@ -12,8 +12,8 @@ public:
   static constexpr const char* DRAW_NODE_NAME = "DebugDrawNode";
 
   // --- component lifecycle ---
-  virtual bool init() override;
-  virtual void update(float dt) override;
+  bool init() override;
+  void update(float dt) override;
 
   CREATE_FUNC(DebugComponent);
 
@@ -30,7 +30,7 @@ private:
   void redrawBorder(cocos2d::DrawNode* drawNode);
 
 protected:
-  static cocos2d::Color4F _debugColor;
+  cocos2d::Color4F _debugColor{cocos2d::Color4F::RED};
 };
 
 } // namespace debugModule

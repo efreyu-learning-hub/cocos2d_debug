@@ -42,9 +42,11 @@ initDebugModule()
 target_link_libraries(${APP_NAME} cocos2d ${GENERIC_LIB})
 ```
 ### 4. Initialize the debug layer on application startup
-In AppDelegate::applicationDidFinishLaunching()
-
-before creating the first scene:
+In AppDelegate.cpp add header:
+```cpp
+#include "cocos2d_debug/imgui_debug_layer.h"
+```
+and in the same file, before creating the first scene add:
 ```cpp
 #ifdef IMGUI_ENABLED
     debugModule::ImGuiDebugLayer::initializeLayer();
