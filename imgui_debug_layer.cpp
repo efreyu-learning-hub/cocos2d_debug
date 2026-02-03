@@ -1,6 +1,6 @@
 #ifdef IMGUI_ENABLED
 #include "imgui_debug_layer.h"
-#include "debug_component.hpp"
+#include "debug_component.h"
 #include "cocos2d.h"
 #ifdef COCOS2D_VERSION
 #include "imgui/imgui.h"

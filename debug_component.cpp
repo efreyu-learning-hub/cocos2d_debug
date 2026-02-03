@@ -1,4 +1,4 @@
-#include "debug_component.hpp"
+#include "debug_component.h"
 
 using namespace cocos2d;
 

@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DEBUG_COMPONENT_HPP
-#define DEBUG_COMPONENT_HPP
+#ifndef DEBUG_COMPONENT_H
+#define DEBUG_COMPONENT_H
 
 #include "cocos2d.h"
 
@@ -35,4 +35,4 @@ protected:
 
 } // namespace debugModule
 
-#endif // DEBUG_COMPONENT_HPP
+#endif // DEBUG_COMPONENT_H
